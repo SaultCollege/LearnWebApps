@@ -19,16 +19,36 @@ and open the template in the editor.
         <style>
             p{ color: green;}
             .class_e1{color: red;}
-            .p4demo{
-                color:red;
+            blockquote {
+                color:blue;
+                padding:2em;
+                background-color: highlight;
+                margin-left: 1em;
             }
-            .p4demo .div1{
-                color: blue;
+            blockquote div {
+                background-color: lightcyan;
+                margin-left: 2em;
             }
+            blockquote > div {
+                color: red;
+                background-color: highlight;
+                margin-left: 3em;
+            }
+            blockquote > div > div{
+                color: white;
+                background-color: black;
+                margin-left: 4em;
+            }
+            blockquote > div > div > div{
+                color: red;
+                background-color: highlight;
+                margin-left: 5em;
+            }
+
         </style>
     </head>
     <body>
-        <div id="container" class="grid-container outline p4demo">
+        <div id="container" class="grid-container outline">
             <a href="../p04.html">Back...</a>
             <h1>Selectors</h1>
             <a target="_blank" href='https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Selectors'>MDN Documentation...</a>
@@ -227,135 +247,137 @@ p {color: green}
                             <button onclick="document.getElementById('toUpper').style.textTransform = 'lowercase'">Reset:</button>
                         </div>
                     </div>
-                    
-                        <h2>Combinators</h2>
-                        <div class="tab1">
-                            From <a href='https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Simple_selectors'>MDN...</a>
-                             and <a href='https://css-tricks.com/child-and-sibling-selectors/'>Tips and Tricks...</a>
+
+                    <h2>Combinators</h2>
+                    <div class="tab1">
+                        From <a href='https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Simple_selectors'>MDN...</a>
+                        and <a href='https://css-tricks.com/child-and-sibling-selectors/'>Tips and Tricks...</a>
                     </div>
                     <div class="tab1">
                         <h1>TODO INCOMPLETE</h1>
                         <h2>Description</h2>
+                        <ul>
+                            <li>  
+                                In CSS, combinators allow you to combine multiple selectors together, which allows you to select elements inside other elements, or adjacent to other elements. The four available types are:
                                 <ul>
-                                    <li>  
-                                        In CSS, combinators allow you to combine multiple selectors together, which allows you to select elements inside other elements, or adjacent to other elements. The four available types are:
+                                    <li>
+                                        The descendant selector —  
                                         <ul>
-                                            <li>
-                                                The descendant selector —  
-                                                <ul>
-                                                    <li style='display: block'>
-                                                        (space) — allows you to select an element nested somewhere inside another element (not necessary a direct descendant; it could be a grandchild, for example)
-                                                    </li>
-                                                </ul>
+                                            <li style='display: block'>
+                                                (space) — allows you to select an element nested somewhere inside another element (not necessary a direct descendant; it could be a grandchild, for example)
                                             </li>
-                                            <li>  
-                                                The child selector — > — 
-                                                <ul>
-                                                    <li style='display: block'>
-                                                        allows you to select an element that is an immediate child of another element.
-                                                    </li>
-                                                </ul>
+                                        </ul>
+                                    </li>
+                                    <li>  
+                                        The child selector — > — 
+                                        <ul>
+                                            <li style='display: block'>
+                                                allows you to select an element that is an immediate child of another element.
                                             </li>
-                                            <li>  
-                                                The adjacent sibling selector — + — 
-                                                <ul>
-                                                    <li style='display: block'>
-                                                        allows you to select an element that is an immediate sibling of another element (i.e. right next to it, at the same level in the hierarchy).
-                                                    </li>
-                                                </ul>
+                                        </ul>
+                                    </li>
+                                    <li>  
+                                        The adjacent sibling selector — + — 
+                                        <ul>
+                                            <li style='display: block'>
+                                                allows you to select an element that is an immediate sibling of another element (i.e. right next to it, at the same level in the hierarchy).
                                             </li>
-                                            <li>  
-                                                The general sibling selector — ~ — 
-                                                <ul>
-                                                    <li style='display: block'>
-                                                        allows you to select any elements that are siblings of another element (i.e. at the same level in the hierarchy, but not necessarily right next to it).
-                                                    </li>
-                                                </ul>
+                                        </ul>
+                                    </li>
+                                    <li>  
+                                        The general sibling selector — ~ — 
+                                        <ul>
+                                            <li style='display: block'>
+                                                allows you to select any elements that are siblings of another element (i.e. at the same level in the hierarchy, but not necessarily right next to it).
                                             </li>
                                         </ul>
                                     </li>
                                 </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <h2>css</h2>
+                <pre><code class="css">
+            blockquote {
+                color:blue;
+                padding:2em;
+                background-color: highlight;
+                margin-left: 1em;
+            }
+            blockquote div {
+                background-color: lightcyan;
+                margin-left: 2em;
+            }
+            blockquote > div {
+                color: red;
+                background-color: highlight;
+                margin-left: 3em;
+            }
+            blockquote > div > div{
+                color: white;
+                background-color: black;
+                margin-left: 4em;
+            }
+            blockquote > div > div > div{
+                color: red;
+                background-color: highlight;
+                margin-left: 5em;
+            }
+</code></pre>
+                <h2>HTML</h2>
+                <pre><code class="html">
+&lt;blockquote&gt;
+    blockquote
+    &lt;div&gt;
+        div 1 = child of blockquote
+        &lt;div&gt;
+            div 2 = child of div 1
+            &lt;div&gt;
+                div 5 = child of div 2
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            div 3 =  descendant of blockquote AND child of div1
+            &lt;div&gt;
+                div 5 = descendant of blockquote AND child of div 3
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            div 4 = child of div1
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/blockquote>
+</code></pre>
+                <h2>Result</h2>
+
+                <blockquote>
+                    blockquote
+                    <div>
+                        div 1 = child of blockquote
+                        <div>
+                            div 2 = child of div 1
+                            <div>
+                                div 5 = child of div 2
                             </div>
                         </div>
-<h2>css</h2>
-<pre><code class="css">
-#p4demo_div1{
-    color: blue;
-}
-</code></pre>
-<h2>HTML</h2>
-<pre><code class="html">
-&lt;div id="p4demo_div1"&gt;
-    div text
-    &lt;ul&gt;
-        &lt;li&gt;li text
-            &lt;ul&gt;
-                &lt;li&gt;
-                    li text
-                &lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/li&gt;
-        &lt;li&gt;li text&lt;/li&gt;
-    &lt;/ul&gt;
-    &lt;ul&gt;
-        &lt;li&gt;li text&lt;/li&gt;
-        &lt;li&gt;li text&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/div&gt;
-</code></pre>
-<h2>Result</h2>
-<div class="p4demo">
-    p4demo div text
-    <ul>
-        <li>li text
-            <ul>
-                <li>
-                    li text
-                </li>
-            </ul>
-        </li>
-        <li>li text</li>
-    </ul>
-    <ul>
-        <li>li text</li>
-        <li>li text</li>
-    </ul>
-    
-    <div class="div1">
-        p4demo div1 div text
-    </div>
-</div>
-
-<h2 style="display: inline;">JavaScript: </h2>
-<h3 style="display: inline;">Descendant Selector </h3>
-Select c5
-<pre><code>
-&lt;button onclick="<em>document.getElementById('toUpper')</em>.style.textTransform = 'uppercase'"&gt;Execute:&lt;/button&gt;
-</code></pre>
-                                        <script>
-                                            function p4demof1() {
-                                                var el = document.getElementById('p4demo_div1');
-                                                li = el.querySelector('ul li');
-                                                li2 = li.querySelectorAll('li div');
-                                                li.style.color = 'blue';
-                                                //                                        alert(li2[1].textContent);
-                                                li2[0].style.color = 'red';
-                                                alert(li.textContent);
-                                                li.textContent = 'xxx';
-                                                alert(li.textContent);
-                                            }
-                                        </script>
-                                        <button onclick="p4demof1()">Execute:</button>
-                                        <button onclick="document.querySelector('.p4demo .c5').style.textTransform = 'lowercase'">Reset:</button>
-<h3 style="display: inline;">Child Selector </h3>
-Select c1
-<pre><code>
-&lt;button onclick="<em>document.getElementById('toUpper')</em>.style.textTransform = 'uppercase'"&gt;Execute:&lt;/button&gt;
-</code></pre>
-<button onclick="document.querySelector('.p4demo > .c1').style.textTransform = 'uppercase'">Execute:</button>
-<button onclick="document.querySelector('.p4demo>.c1').style.textTransform = 'lowercase'">Reset:</button>
-
-                </div>
-
-                </body>
-                </html>
+                        <div>
+                            div 3 =  descendant of blockquote AND child of div1
+                            <div>
+                                div 5 = descendant of blockquote AND child of div 3
+                            </div>
+                        </div>
+                        <div>
+                            div 4 = child of div1
+                        </div>
+                    </div>
+                </blockquote>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </body>
+</html>
