@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>p4 demo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../resources/css/myLayout.css">
+        <!-- fonts see https://fonts.google.com/specimen/Roboto?selection.family=Roboto -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono" rel="stylesheet">
+
+        <link rel="stylesheet" href="../resources/libraries/highlight/styles/default.css">
+        <script src="../resources/libraries/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <style>
+            p{ color: green;}
+            .class_e1{color: red;}
+            .p4demo{
+                color:red;
+            }
+            .p4demo .div1{
+                color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container" class="grid-container outline p4demo">
+            <a href="../p04.html">Back...</a>
+            <h1>Selectors</h1>
+            <a target="_blank" href='https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Selectors'>MDN Documentation...</a>
+            <img src='../resources/images/css syntax - ruleset.png'/>
+            <h2>Type or Element Selectors</h2>
+            <div class="tab1">
+                <h2>Description</h2>
+                <div class="tab1">
+                    Apply style to elements of a given type.  For example apply a style to all &lt;p&gt; tags
+                </div>
+            </div>
+
+            <div class="tab1">
+                <h2>HTML</h2>
+                <div class="tab1">
+                    <pre><code class="html">
+&lt;p&gt;Hello World&lt;p&gt;
+</code></pre>
+                </div>
+            </div>
+
+            <div class="tab1">
+                <h2>css</h2>
+                <div class="tab1">
+                    <pre><code class="css">
+p {color: green}
+</code></pre>
+                </div>
+            </div>
+            <div class="tab1">
+                <h2>Result</h2>
+                <div class="tab1">
+                    <p>Hello World</p>
+                </div>
+            </div>
+
+            <div>
+                <h2>Class Selectors</h2>
+            </div>
+            <div class="tab1">
+                <h3>Description</h3>
+                <div class="tab1">
+                    Apply style to elements within a given class.  For example apply a style to all &lt;p&gt; tags
+                    who belong to class <em>"class_e1"</em>
+                </div>
+            </div>
+
+            <div class="tab1">
+                <h2>HTML</h2>
+                <div class="tab1">
+                    <pre><code class="html">
+&lt;p id="id_e1" class="class_e1"&gt;no text&lt;/p&gt;
+</code></pre>
+                </div>
+            </div>
+            <div class="tab1">
+                <h2>CSS</h2>
+                <div class="tab1">
+                    <pre><code class="css">
+.class_e1{
+    color: red;
+}
+</code></pre>
+                </div>
+            </div>
+            <div class="tab1">
+                <h2>Result</h2>
+                <div class="tab1">
+                    <p id="id_e1" class="class_e1">no text</p>
+                </div>
+            </div>
+            <div class="tab1">
+                <h2>JavaScript: </h2>
+                <div>
+                    <div class="tab1">
+                        <pre><code class="html">
+&lt;button onclick=
+    "
+    document.querySelector('.class_e1').textContent = 'Hello World';
+    document.querySelector('.class_e1').style.color = 'blue';
+    "&gt;
+    Execute:
+&lt;/button&gt;
+&lt;button onclick=                    "
+    document.querySelector('.class_e1').textContent = 'Hello World';
+    document.querySelector('.class_e1').style.color = 'red';
+    "&gt;
+    Reset:
+&lt;/button&gt;
+</code></pre>
+                        <button onclick=
+                                "
+                                        document.querySelector('.class_e1').textContent = 'Hello World';
+                                        document.querySelector('.class_e1').style.color = 'blue';
+                                ">
+                            Execute:
+                        </button>
+                        <button onclick=                    "
+                                document.querySelector('.class_e1').textContent = 'Hello World';
+                                document.querySelector('.class_e1').style.color = 'red';
+                                ">
+                            Reset:
+                        </button>
+                    </div>
+
+
+                    <h2>Multiple Class Selectors</h2>
+                    <div class="tab1">
+                        <h3>Description</h3>
+                        <div class="tab1">
+                            A tag can belong to more than one class.  Specify classes in a space separated list.
+                        </div>
+                    </div>
+
+                    <div class="tab1">
+                        <h2>HTML</h2>
+                        <div class="tab1">
+                            <pre><code class="html">
+&lt;p class='classA classB'&gt;no text&lt;/p&gt;
+</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab1">
+                        <h2>css</h2>
+                        <div class="tab1">
+                            <pre><code class="css">
+.classA{
+    color: red;
+}
+.classB{
+    font-style: italic;
+}
+
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="tab1">
+                        <h2>Result</h2>
+                        <div class="tab1">
+                            <p class='classA classB'>no text</p>
+                        </div>
+                    </div>
+                    <div class="tab1">
+                        <h2>JavaScript: </h2>
+                        <div class="tab1">
+                            <pre><code>
+&lt;button onclick="<em>document.querySelector('.classA.classB')</em>.textContent = 'Hello World'"&gt;Execute:&lt;/button&gt;
+&lt;button onclick="<em>document.querySelector('.classA.classB')</em>.textContent = 'no text'"&gt;Reset:&lt;/button&gt;
+</code></pre>
+                            <button onclick="document.querySelector('.classA.classB').textContent = 'Hello World'">Execute:</button>
+                            <button onclick="document.querySelector('.classA.classB').textContent = 'no text'">Reset:</button>
+                        </div>
+                    </div>
+                    <h2>Id Selectors</h2>
+                    <div class="tab1">
+                        <h2>Description</h2>
+                        <div class="tab1">
+                            Element id's, unlike classes, are unique.  Select and apply style by id.
+                        </div>
+                    </div>
+                    <div class="tab1">
+                        <h2>HTML</h2>
+                        <div class="tab1">
+                            <pre><code class="html">
+&lt;p id="toUpper"&gt;
+  Hello World.
+&lt;/p&gt;
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="tab1">
+                        <h2>css</h2>
+                        <div class="tab1">
+                            <pre><code class="css">
+#toUpper{
+    color: blue;
+}
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="tab1">
+                        <h2>Result</h2>
+                        <div class="tab1">
+                            <p id="toUpper">hello world.</p>
+                        </div>
+                    </div>
+                    <div class="tab1">
+                        <h2>JavaScript: </h2>
+                        <div class="tab1">
+                            <pre><code>
+&lt;button onclick="<em>document.getElementById('toUpper')</em>.style.textTransform = 'uppercase'"&gt;Execute:&lt;/button&gt;
+&lt;button onclick="<em>document.getElementById('toUpper')</em>.style.textTransform = 'lowercase'"&gt;Reset:&lt;/button&gt;
+</code></pre>
+                            <button onclick="document.getElementById('toUpper').style.textTransform = 'uppercase'">Execute:</button>
+                            <button onclick="document.getElementById('toUpper').style.textTransform = 'lowercase'">Reset:</button>
+                        </div>
+                    </div>
+                    
+                        <h2>Combinators</h2>
+                        <div class="tab1">
+                            From <a href='https://developer.mozilla.org/en-US/docs/Learn/CSS/Introduction_to_CSS/Simple_selectors'>MDN...</a>
+                             and <a href='https://css-tricks.com/child-and-sibling-selectors/'>Tips and Tricks...</a>
+                    </div>
+                    <div class="tab1">
+                        <h1>TODO INCOMPLETE</h1>
+                        <h2>Description</h2>
+                                <ul>
+                                    <li>  
+                                        In CSS, combinators allow you to combine multiple selectors together, which allows you to select elements inside other elements, or adjacent to other elements. The four available types are:
+                                        <ul>
+                                            <li>
+                                                The descendant selector —  
+                                                <ul>
+                                                    <li style='display: block'>
+                                                        (space) — allows you to select an element nested somewhere inside another element (not necessary a direct descendant; it could be a grandchild, for example)
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>  
+                                                The child selector — > — 
+                                                <ul>
+                                                    <li style='display: block'>
+                                                        allows you to select an element that is an immediate child of another element.
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>  
+                                                The adjacent sibling selector — + — 
+                                                <ul>
+                                                    <li style='display: block'>
+                                                        allows you to select an element that is an immediate sibling of another element (i.e. right next to it, at the same level in the hierarchy).
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>  
+                                                The general sibling selector — ~ — 
+                                                <ul>
+                                                    <li style='display: block'>
+                                                        allows you to select any elements that are siblings of another element (i.e. at the same level in the hierarchy, but not necessarily right next to it).
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+<h2>css</h2>
+<pre><code class="css">
+#p4demo_div1{
+    color: blue;
+}
+</code></pre>
+<h2>HTML</h2>
+<pre><code class="html">
+&lt;div id="p4demo_div1"&gt;
+    div text
+    &lt;ul&gt;
+        &lt;li&gt;li text
+            &lt;ul&gt;
+                &lt;li&gt;
+                    li text
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li&gt;li text&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul&gt;
+        &lt;li&gt;li text&lt;/li&gt;
+        &lt;li&gt;li text&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Result</h2>
+<div class="p4demo">
+    p4demo div text
+    <ul>
+        <li>li text
+            <ul>
+                <li>
+                    li text
+                </li>
+            </ul>
+        </li>
+        <li>li text</li>
+    </ul>
+    <ul>
+        <li>li text</li>
+        <li>li text</li>
+    </ul>
+    
+    <div class="div1">
+        p4demo div1 div text
+    </div>
+</div>
+
+<h2 style="display: inline;">JavaScript: </h2>
+<h3 style="display: inline;">Descendant Selector </h3>
+Select c5
+<pre><code>
+&lt;button onclick="<em>document.getElementById('toUpper')</em>.style.textTransform = 'uppercase'"&gt;Execute:&lt;/button&gt;
+</code></pre>
+                                        <script>
+                                            function p4demof1() {
+                                                var el = document.getElementById('p4demo_div1');
+                                                li = el.querySelector('ul li');
+                                                li2 = li.querySelectorAll('li div');
+                                                li.style.color = 'blue';
+                                                //                                        alert(li2[1].textContent);
+                                                li2[0].style.color = 'red';
+                                                alert(li.textContent);
+                                                li.textContent = 'xxx';
+                                                alert(li.textContent);
+                                            }
+                                        </script>
+                                        <button onclick="p4demof1()">Execute:</button>
+                                        <button onclick="document.querySelector('.p4demo .c5').style.textTransform = 'lowercase'">Reset:</button>
+<h3 style="display: inline;">Child Selector </h3>
+Select c1
+<pre><code>
+&lt;button onclick="<em>document.getElementById('toUpper')</em>.style.textTransform = 'uppercase'"&gt;Execute:&lt;/button&gt;
+</code></pre>
+<button onclick="document.querySelector('.p4demo > .c1').style.textTransform = 'uppercase'">Execute:</button>
+<button onclick="document.querySelector('.p4demo>.c1').style.textTransform = 'lowercase'">Reset:</button>
+
+                </div>
+
+                </body>
+                </html>
