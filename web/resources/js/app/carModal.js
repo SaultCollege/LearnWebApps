@@ -129,7 +129,8 @@ function carModal(uuid, onClicksubmitFunction, car) {
     document.getElementsByTagName('head')[0].appendChild(style);
 
     spanClose.setAttribute('class', 'close');
-    spanClose.setAttribute('onclick', "this.parentElement.parentElement.style.display='none'");
+//    spanClose.setAttribute('onclick', "this.parentElement.parentElement.style.display='none'");
+    spanClose.setAttribute('onclick', "var el=document.getElementById('"+uuid+"');document.getElementsByTagName('body')[0].removeChild(el)");
     spanClose.innerHTML = '&times;';
     spanClose.style.color = '#aaa';
     spanClose.style.float = 'right';

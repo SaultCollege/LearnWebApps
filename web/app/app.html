@@ -17,6 +17,9 @@
         <script src='../resources/js/app/util.js'></script>
         <script>
             var cars = []; // global cars array
+            var dbName = "CarsDatabase";
+            var db;
+
         </script>
     </head>
     <body>
@@ -84,31 +87,66 @@
 
         </div>
         <script>
-            /*
-            var testDiv = new testDiv(uuid(),'Test Div');
-            var body = document.getElementsByTagName("body")[0];
-            console.log(testDiv.getId());
-            testDiv.onClick(fn);
-            body.appendChild(testDiv.getDiv());
-            function fn(){
-                alert('u clicked me 2');
+            //https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB
+            if (!window.indexedDB) {
+                window.alert("Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available.");
             }
-            */
+
+
+
+            var request = window.indexedDB.open(dbName, 2);
+
+            request.onerror = function (event) {
+                // Do something with request.errorCode!
+                alert("Database error: " + event.target.errorCode);
+            };
+            request.onupgradeneeded = function (event) {
+                var db = event.target.result;
+                // Do something with request.result!
+                alert('db' + db + ' open succeeded');
+
+                // Create an objectStore to hold information about our customers. We're
+                // going to use "ssn" as our key path because it's guaranteed to be
+                // unique - or at least that's what I was told during the kickoff meeting.
+                var objectStore = db.createObjectStore("cars", {keyPath: "uuid"});
+
+                // Create an index to search customers by name. We may have duplicates
+                // so we can't use a unique index.
+                objectStore.createIndex("make", "make", {unique: false});
+
+                // Create an index to search customers by email. We want to ensure that
+                // no two customers have the same email, so use a unique index.
+                objectStore.createIndex("model", "model", {unique: true});
+
+                // Use transaction oncomplete to make sure the objectStore creation is 
+                // finished before adding data into it.
+                objectStore.transaction.oncomplete = function (event) {
+                    // Store values in the newly created objectStore.
+                    var carObjectStore = db.transaction("cars", "readwrite").objectStore("cars");
+                    for (var i in cars) {
+                        carObjectStore.add(cars[i]);
+                    }
+                };
+            };
+
+
+            /*
+             var testDiv = new testDiv(uuid(),'Test Div');
+             var body = document.getElementsByTagName("body")[0];
+             console.log(testDiv.getId());
+             testDiv.onClick(fn);
+             body.appendChild(testDiv.getDiv());
+             function fn(){
+             alert('u clicked me 2');
+             }
+             */
             function showDialog() {
                 var body = document.getElementsByTagName("body")[0];
-//                var x = carModal(clickSubmit);
-//                body.appendChild(x);
-//                el = document.getElementById(x.id);
-//                el.style.display = 'block';
-//                alert('el'+el);
-
                 var modal = new carModal(uuid(), clickSubmit);
-                console.log('modal=='+modal);//.alert();
-                console.log('modal.getModal=='+modal.getModal());//.alert();
-                console.log('modal.id==' + modal.getId());
+//                console.log('modal==' + modal);//.alert();
+//                console.log('modal.getModal==' + modal.getModal());//.alert();
+//                console.log('modal.id==' + modal.getId());
 
-
-//                y.onSubmit(function(){alert('hello');});
 
                 body.appendChild(modal.getModal());
                 var el = document.getElementById(modal.getId());
@@ -144,8 +182,9 @@
                 cars.forEach(function (item, index, array) {
                     console.log(item, index, item.uuid);
                 });
-                document.getElementById(id).style.display = 'none'
+                //document.getElementById(id).style.display = 'none';                
                 insertCar(car);
+                var removeMe=document.getElementById(id);document.getElementsByTagName('body')[0].removeChild(removeMe);
             }
 
             function insertCar(car) {
@@ -198,9 +237,57 @@
                 divSelect.appendChild(editIcon);
                 divRow.appendChild(divSelect);
                 container.appendChild(divRow);
+
+
+                var request = window.indexedDB.open(dbName, 2);
+                request.onerror = function (event) {
+                    alert("Why didn't you allow my web app to use IndexedDB?!");
+                };
+                request.onsuccess = function (event) {
+                    db = event.target.result;
+                    var transaction = db.transaction(["cars"], "readwrite");
+                    // Do something when all the data is added to the database.
+                    transaction.oncomplete = function (event) {
+                        alert("All done!");
+                    };
+
+                    transaction.onerror = function (event) {
+                        // Don't forget to handle errors!
+                    };
+
+                    var objectStore = transaction.objectStore("cars");
+                    for (var i in cars) {
+                        var request = objectStore.add(cars[i]);
+                        request.onsuccess = function (event) {
+                            // event.target.result == customerData[i].ssn;
+                            alert('onSuccess add car');
+                        };
+                        alert('onSuccess 2');
+
+                    }
+                    ;
+                    var objectStore = db.transaction("cars").objectStore("cars");
+
+                    objectStore.openCursor().onsuccess = function (event) {
+                        var cursor = event.target.result;
+                        if (cursor) {
+                            console.log('cursor.key-->' + cursor.key);
+                            cursor.continue();
+                        } else {
+                            alert("No more entries!");
+                        }
+                    };
+                };
             }
             function edit(id) {
-                alert(id);
+                var body = document.getElementsByTagName("body")[0];
+                var modal = new carModal(uuid(), clickSubmit);
+                var el=cars.find(findCarById);
+                function findCarById(car){
+                    return car.uuid===id;
+                }
+                alert('found->'+el);
+
             }
         </script>
 
