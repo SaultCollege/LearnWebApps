@@ -57,7 +57,7 @@
                     <a href="index.html">Back...</a>
                     <div class="row">
                         <div class="col-6">
-                            <button id='addButton' onclick="showDialog3()">Add Car...</button>
+                            <button id='addButton' onclick="showDialog2()">Add Car...</button>
                             <button id='addButton2' onclick="showDialog()">Add Car Dialog...</button>
                         </div>
                     </div>
@@ -142,17 +142,25 @@
              }
              */
             function showDialog3() {
-                var v = new Vehicle();
-                var modal = new Dialog(uuid(), clickSubmit, v);
-                modal.showModal();
+                var body = document.getElementsByTagName("body")[0];
+                var modal = new Dialog(uuid(), clickSubmit);
+                var v=new Vehicle();
+                inputs=v.getDialogInputs();
+                modal.setInputs(inputs);
+                
+                body.appendChild(modal.getModal());
+                var el = document.getElementById(modal.getId());
+                el.style.display = 'block';
+                console.log('inputs==' + inputs);
+                console.log('el==' + modal);
             }
             function showDialog2() {
                 var body = document.getElementsByTagName("body")[0];
                 var modal = new Dialog(uuid(), clickSubmit);
-                var v = new Vehicle();
-                inputs = v.getDialogInputs();
+                var v=new Vehicle();
+                inputs=v.getDialogInputs();
                 modal.setInputs(inputs);
-
+                
                 body.appendChild(modal.getModal());
                 var el = document.getElementById(modal.getId());
                 el.style.display = 'block';
@@ -203,8 +211,7 @@
                 });
                 //document.getElementById(id).style.display = 'none';                
                 insertCar(car);
-                var removeMe = document.getElementById(id);
-                document.getElementsByTagName('body')[0].removeChild(removeMe);
+                var removeMe=document.getElementById(id);document.getElementsByTagName('body')[0].removeChild(removeMe);
             }
 
             function insertCar(car) {
@@ -301,33 +308,19 @@
             }
             function edit(id) {
                 var body = document.getElementsByTagName("body")[0];
-//                var modal = new carModal(uuid(), clickSubmit);
+                var modal = new carModal(uuid(), clickSubmit);
 //                var modal = new Dialog(uuid(), clickSubmit2);
-                var el = cars.find(findCarById);
-                function findCarById(car) {
-                    return car.uuid === id;
+                var el=cars.find(findCarById);
+                function findCarById(car){
+                    return car.uuid===id;
                 }
-                alert('found->' + el);
-                var modal = new Dialog(uuid(), updateCar, el);
-                modal.showModal();
-
-
-
-//              var modal = new Dialog(uuid(), clickSubmit);
-//                var inputs=el.getDialogInputs();
-//                modal.setInputs(inputs);
-//                body.appendChild(modal.getModal());
-//                var el2 = document.getElementById(modal.getId());
-//                el2.style.display = 'block';
-            }
-            function updateCar(e) {
-                var id = e.srcElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
-                fields = document.getElementById(id).getElementsByTagName('input');
-                var fields = document.getElementById(id).getElementsByTagName('input');
-                var image = fields[0].value;
-                var make = fields[1].value;
-                var model = fields[2].value;
-                var year = fields[3].value;
+                alert('found->'+el);
+                var modal = new Dialog(uuid(), clickSubmit);
+                var inputs=el.getDialogInputs();
+                modal.setInputs(inputs);
+                body.appendChild(modal.getModal());
+                var el2 = document.getElementById(modal.getId());
+                el2.style.display = 'block';
             }
         </script>
 
