@@ -21,7 +21,6 @@ and open the template in the editor.
             var people = []; // global cars array
             var dbName = "PersonDatabase";
             var db;
-
         </script>
     </head>
     <body>
@@ -53,27 +52,87 @@ and open the template in the editor.
             </div>
         </div>
         <script>
-            
-            function newPerson(){
-                var p=new Person();
-                var modal=new Dialog(uuid(), newPersonHandler, p);
-                modal.showModal();
+
+            function newPerson() {
+                var p = new Person();
+                var d = new Dialog(uuid(), newPersonHandler, p);
+                d.showModal();
             }
-            
-            function newPersonHandler(e){
-                var id = e.srcElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+
+            function newPersonHandler(e) {
+/*                
+                alert('detail-->'+e.detail);
+                var str = e.srcElement.getAttribute('id');
+                var id = str.substring(2, str.length + 2);
                 var fields = document.getElementById(id).getElementsByTagName('input');
-                var image=fields[0];
-                var firstname=fields[1];
-                var lastname=fields[2];
-                var person=new Person(uuid(), firstname, lastname);
+                var image = fields[0].value;
+                // image uses the \ file separator and will be of the form c:\fakepath\filename.type in windows
+                // image will have / file separator if in linux
+                // so, convert all \ to /, then split along / then get last element
+                // replace all \ with /
+                var ss = image.replace(/\\/g, "/");
+                // split
+                var s = ss.split("/");
+                image = s[s.length - 1];
+                alert(image);
+
+                var firstname = fields[1].value;
+                var lastname = fields[2].value;
+                var person = new Person(uuid(), firstname, lastname, image);
                 console.log(fields);
                 people.push(person);
                 people.forEach(function (item, index, array) {
                     console.log(item, index, item.uuid);
                 });
-                var el=document.getElementById(id);document.getElementsByTagName('body')[0].removeChild(el)
+*/
+                var person=e.detail;
+//                var str = e.srcElement.getAttribute('id');
+//                var id = str.substring(2, str.length + 2);
+
+                console.log(person);
+                console.log("person.modal="+person.modal);
+                people.push(person);
+                people.forEach(function (item, index, array) {
+                    console.log(item, index, item.uuid);
+                });
+                
+//                var id=person
+//                var el = document.getElementById(id);
+//                document.getElementsByTagName('body')[0].removeChild(el);
+                
+                person.modal.closeModal();
+
+                console.log(person.firstname);
+                console.log(person.fullname);
+
+                var container = document.getElementById('content');
+                var view = person.getView();
+                container.appendChild(view);
+
             }
+
+            // example of defining a getter for a property
+            var o = {a: 0};
+            Object.defineProperty(o, 'b', {get: function () {
+                    return this.a + 1;
+                }});
+            console.log(o.b); // Runs the getter, which yields a + 1 (which is 1)
+
+            function x() {
+                // https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+                var p = new Person(uuid(), 'firstname', 'lastname', 'image');
+                var event = new CustomEvent('build', {'detail': p});
+                // Listen for the event.
+                var elem = document.createElement('DIV');
+                elem.addEventListener('build', eventHandler, false);
+
+                // Dispatch the event.
+                elem.dispatchEvent(event);
+            };
+            function eventHandler(e) {
+                console.log('The person is: ' + e.detail.firstname);
+            }
+            x();
         </script>
     </body>
 </html>

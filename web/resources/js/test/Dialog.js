@@ -6,7 +6,9 @@
  */
 function Dialog(uuid, onClicksubmitFunction, object) {
     console.log('object=' + object);
+    object.modal=this;
 
+    this.object = object;
     this.onClicksubmitFunction = onClicksubmitFunction;
     this.uuid = uuid;
 
@@ -24,6 +26,7 @@ function Dialog(uuid, onClicksubmitFunction, object) {
 
     var submitButton = document.createElement('BUTTON');
     submitButton.innerHTML = 'Submit';
+    submitButton.setAttribute('id', 'ID' + uuid);
 
     divModal.setAttribute('id', uuid);
     divModal.setAttribute('class', 'modal');
@@ -51,7 +54,7 @@ function Dialog(uuid, onClicksubmitFunction, object) {
     divModalContent.appendChild(divInputs);
     divModalContent.appendChild(divSubmitRow);
 
-    inputs = object.getDialogInputs();
+    var inputs = object.getDialogInputs();
     divInputs.appendChild(inputs);
 
 
@@ -82,12 +85,30 @@ function Dialog(uuid, onClicksubmitFunction, object) {
     divSubmitRow.setAttribute('class', 'row');
     divSubmitStyle.style.textAlign = 'right';
     divSubmitCol1.setAttribute('class', 'col-6');
-    submitButton.onclick = onClicksubmitFunction;
+//    submitButton.onclick = this.onClicksubmitFunction2;
+    this.onClicksubmitFunction2 = function () {
+        var fields = document.getElementById(uuid).getElementsByTagName('input');
+        console.log('pp'+fields);
+        var obj=object.getObject(uuid);
+        
+        var event = new CustomEvent('build', {'detail': object});
+        // Listen for the event.
+        submitButton.addEventListener('build', onClicksubmitFunction, false);
 
+        // Dispatch the event.
+        submitButton.dispatchEvent(event);
+    };
+    submitButton.addEventListener('click',this.onClicksubmitFunction2);
+    
     divSubmitRow.appendChild(divSubmitCol1);
     divSubmitCol1.appendChild(divSubmitStyle);
     divSubmitStyle.appendChild(submitButton);
 
+
+
+    this.getObject = function () {
+        return this.object;
+    };
     this.getModal = function () {
         return divModal;
     };
@@ -98,6 +119,11 @@ function Dialog(uuid, onClicksubmitFunction, object) {
         divInputs.appendChild(inputs);
     };
 
+    this.closeModal=function(){
+        var el = document.getElementById(uuid);
+        document.getElementsByTagName('body')[0].removeChild(el);
+
+    }
     this.showModal = function () {
         var body = document.getElementsByTagName("body")[0];
         body.appendChild(divModal);
@@ -106,5 +132,7 @@ function Dialog(uuid, onClicksubmitFunction, object) {
     };
 }
 ;
-
+function xx(){
+    alert('xx');
+};
 

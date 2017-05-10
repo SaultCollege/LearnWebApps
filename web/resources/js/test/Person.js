@@ -6,8 +6,39 @@ function Person(uuid, firstname, lastname, image) {
     this.lastname = lastname;
     this.image = image;
 
+    // setters and getters http://stackoverflow.com/questions/5222209/getter-setter-in-constructor
+    Object.defineProperties(this, {
+        "fullname": {
+            "get": function () {
+                return firstname + ' ' + lastname;
+            },
+            "set": function () {
+                firstname = 'xxx';
+            }
+        }
+    });
+
     this.toString = function () {
         return this.firstname + ', ' + this.lastname + ', ' + this.image;
+    };
+
+    this.getObject = function (id) {
+        // populate the properties with the values entered in the dialog box
+        var fields = document.getElementById(id).getElementsByTagName('input');
+        var img = fields[0].value;
+        // image uses the \ file separator and will be of the form c:\fakepath\filename.type in windows
+        // image will have / file separator if in linux
+        // so, convert all \ to /, then split along / then get last element
+        // replace all \ with /
+        var ss = img.replace(/\\/g, "/");
+        // split
+        var s = ss.split("/");
+        this.image = s[s.length - 1];
+//        alert(image);
+
+        this.firstname = fields[1].value;
+        this.lastname = fields[2].value;
+        return this;
     };
 
     this.getDialogInputs = function () {
@@ -39,12 +70,13 @@ function Person(uuid, firstname, lastname, image) {
 
 
         inputImage.innerHTML = this.image;
-        inputFirstname.value = (this.make === undefined) ? '' : this.make;
-        inputLastname.value = (this.model === undefined) ? '' : this.model;
+
+        inputFirstname.value = (this.firstname === undefined) ? '' : this.firstname;
+        inputLastname.value = (this.lastname === undefined) ? '' : this.lastname;
 
         divFirstnameRow.setAttribute('class', 'row');
         divFirstnameCol1.setAttribute('class', 'col-2');
-        divFirstnameCol2.setAttribute('class', 'col-4 make');
+        divFirstnameCol2.setAttribute('class', 'col-4 firstname');
         divFirstnameCol1.innerHTML = 'Firstname:';
         inputFirstname.style.width = '100%';
         divFirstnameCol2.appendChild(inputFirstname);
@@ -55,7 +87,7 @@ function Person(uuid, firstname, lastname, image) {
 
         divLastnameRow.setAttribute('class', 'row');
         divLastnameCol1.setAttribute('class', 'col-2');
-        divLastnameCol2.setAttribute('class', 'col-4 model');
+        divLastnameCol2.setAttribute('class', 'col-4 lastname');
         divLastnameCol1.innerHTML = 'Lastname';
         inputLastname.style.width = '100%';
         divLastnameCol2.appendChild(inputLastname);
@@ -76,16 +108,17 @@ function Person(uuid, firstname, lastname, image) {
         var divImage = document.createElement('DIV');
         var divFirstname = document.createElement('DIV');
         var divLastname = document.createElement('DIV');
-        var divYear = document.createElement('DIV');
+//        var divYear = document.createElement('DIV');
         var divSelect = document.createElement('DIV');
         divRow.setAttribute('id', this.uuid);
         divRow.setAttribute('class', "row");
         divImage.setAttribute('class', "col-2 image");
-        divFirstname.setAttribute('class', "col-1 make");
-        divLastname.setAttribute('class', "col-1 model");
+        divFirstname.setAttribute('class', "col-1 firstname");
+        divLastname.setAttribute('class', "col-1 lastname");
         divSelect.setAttribute('class', "col-1 checkbox");
-        divFirstname.innerHTML = this.make; //"make";
-        divLastname.innerHTML = this.model; //"model";
+        divFirstname.innerHTML = this.firstname; //"make";
+        divLastname.innerHTML = this.lastname; //"model";
+
         var img = document.createElement('IMG');
         img.src = '../resources/images/app/' + this.image;
         img.width = 300;
